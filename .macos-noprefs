@@ -56,11 +56,11 @@ cp "${HOME}/macsetup/.gitconfig" "${HOME}/.gitconfig"
 
 # Use Brewfile to install apps
 echo "brew installing bundle"
-brew bundle --file "${HOME}/macsetup/Brewfile"
+#brew bundle --file "${HOME}/macsetup/Brewfile"
 
-echo "node --version: $(node --version)"
-echo "npm --version: $(npm --version)"
-echo "yarn --varsion: $(yarn --version)"
+#echo "node --version: $(node --version)"
+#echo "npm --version: $(npm --version)"
+#echo "yarn --varsion: $(yarn --version)"
 
 #echo "installing a few global npm packages"
 #npm install --global serve
