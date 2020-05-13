@@ -30,21 +30,6 @@ echo "installing homebrew"
 ##/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 
-# Use Brewfile to install apps
-echo "brew installing bundle"
-brew bundle
-
-echo "node --version: $(node --version)"
-echo "npm --version: $(npm --version)"
-echo "yarn --varsion: $(yarn --version)"
-
-echo "installing a few global npm packages"
-npm install --global serve
-
-echo "setting up FamilySearch dev environment"
-npm install --global @fs/fr-cli
-npm login --registry=https://repo.churchofjesuschrist.org/artifactory/api/npm/npm-fhd/ --scope=@fs
-
 echo "Generating an RSA token for GitHub"
 mkdir -p ~/.ssh
 touch ~/.ssh/config
@@ -61,6 +46,7 @@ ln -s "${HOME}/macsetup/.gitconfig" "${HOME}/.gitconfig"
 ##ln -s "${HOME}/macsetup/.my_bin" "${HOME}/.my_bin"
 ##ln -s "${HOME}/macsetup/.vimrc" "${HOME}/.vimrc"
 ##ln -s "${HOME}/macsetup/.vimrc-parts" "${HOME}/.vimrc-parts"
+cp "${HOME}/macsetup/.gitconfig" "${HOME}/.gitconfig"
 
 # get bat and delta all configured
 ##mkdir -p "${HOME}/.config/bat/themes"
@@ -68,6 +54,20 @@ ln -s "${HOME}/macsetup/.gitconfig" "${HOME}/.gitconfig"
 ##git clone https://github.com/batpigandme/night-owlish "${HOME}/.config/bat/themes/night-owlish"
 ##bat cache --build
 
+# Use Brewfile to install apps
+echo "brew installing bundle"
+brew bundle --file "${HOME}/macsetup/Brewfile"
+
+echo "node --version: $(node --version)"
+echo "npm --version: $(npm --version)"
+echo "yarn --varsion: $(yarn --version)"
+
+echo "installing a few global npm packages"
+npm install --global serve
+
+echo "setting up FamilySearch dev environment"
+npm install --global @fs/fr-cli
+npm login --registry=https://repo.churchofjesuschrist.org/artifactory/api/npm/npm-fhd/ --scope=@fs
 
 echo "making system modifications:"
 
