@@ -27,7 +27,6 @@ mkdir -p "${HOME}/code"
 
 echo "installing homebrew"
 # install homebrew https://brew.sh
-##/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 
 echo "Generating an RSA token for GitHub"
@@ -40,13 +39,12 @@ echo "run 'pbcopy < ~/.ssh/id_rsa.pub' and paste that into GitHub"
 
 echo "cloning dotfiles"
 git clone git@github.com:gmdayley/macsetup.git "${HOME}/macsetup"
-# #ln -s "${HOME}/macsetup/.zshrc" "${HOME}/.zshrc"
 ln -s "${HOME}/macsetup/.gitignore_global" "${HOME}/.gitignore_global"
 ln -s "${HOME}/macsetup/.gitconfig" "${HOME}/.gitconfig"
+# #ln -s "${HOME}/macsetup/.zshrc" "${HOME}/.zshrc"
 # #ln -s "${HOME}/macsetup/.my_bin" "${HOME}/.my_bin"
 # #ln -s "${HOME}/macsetup/.vimrc" "${HOME}/.vimrc"
 # #ln -s "${HOME}/macsetup/.vimrc-parts" "${HOME}/.vimrc-parts"
-cp "${HOME}/macsetup/.gitconfig" "${HOME}/.gitconfig"
 
 # get bat and delta all configured
 # #mkdir -p "${HOME}/.config/bat/themes"
@@ -407,8 +405,11 @@ defaults write com.apple.finder FXInfoPanesExpanded -dict \
 # Enable highlight hover effect for the grid view of a stack (Dock)
 defaults write com.apple.dock mouse-over-hilite-stack -bool true
 
-# Set the icon size of Dock items to 16 pixels
-defaults write com.apple.dock tilesize -int 16
+# Set the icon size of Dock items to 32 pixels
+defaults write com.apple.dock tilesize -int 32
+
+# Set the magnification of Dock to true
+defaults write com.apple.dock autohide -bool true
 
 # Change minimize/maximize window effect
 defaults write com.apple.dock mineffect -string "scale"
