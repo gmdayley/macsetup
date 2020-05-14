@@ -18,9 +18,9 @@ sudo -v
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 function pause(){
- read -s -n 1 -p "Press any key to continue . . ."
- echo ""
+   read -p "$*"
 }
+ 
 
 
 ###############################################################################
@@ -29,6 +29,8 @@ function pause(){
 
 echo "Hello $(whoami)! Let's get you set up."
 
+pause "Press any key to continue"
+
 echo "mkdir -p ${HOME}/code"
 mkdir -p "${HOME}/code"
 
@@ -36,22 +38,16 @@ echo "installing homebrew"
 # install homebrew https://brew.sh
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 
-pause 
-
 echo "Generating an RSA token for GitHub"
 mkdir -p ~/.ssh
 touch ~/.ssh/config
 ssh-keygen -t rsa -b 4096 -C "gabriel.dayley+github@gmail.com"
 
-pause
-
 echo "Host *\n AddKeysToAgent yes\n UseKeychain yes\n IdentityFile ~/.ssh/id_rsa" | tee ~/.ssh/config
 eval "$(ssh-agent -s)"
 echo "run 'pbcopy < ~/.ssh/id_rsa.pub' and paste that into GitHub"
 
-pause
-
-exit 0
+pause "Once command above is complete, press any key to continue"
 
 echo "cloning dotfiles"
 git clone git@github.com:gmdayley/macsetup.git "${HOME}/macsetup"
@@ -79,9 +75,11 @@ echo "yarn --varsion: $(yarn --version)"
 echo "installing a few global npm packages"
 npm install --global serve
 
-echo "setting up FamilySearch dev environment"
-npm install --global @fs/fr-cli
-npm login --registry=https://repo.churchofjesuschrist.org/artifactory/api/npm/npm-fhd/ --scope=@fs
+#echo "setting up FamilySearch dev environment"
+#npm install --global @fs/fr-cli
+#npm login --registry=https://repo.churchofjesuschrist.org/artifactory/api/npm/npm-fhd/ --scope=@fs
+
+pause "Press any key to continue with making system modifications"
 
 echo "making system modifications:"
 
