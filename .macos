@@ -5,6 +5,7 @@
 # Modified more by Gabriel Dayley
 # Run without downloading:
 # curl https://raw.githubusercontent.com/gmdayley/macsetup/master/.macos | bash
+# bash <(curl -s https://raw.githubusercontent.com/gmdayley/macsetup/master/.macos)
 
 # Close any open System Preferences panes, to prevent them from overriding
 # settings we’re about to change
