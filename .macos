@@ -37,6 +37,12 @@ echo "Host *\n AddKeysToAgent yes\n UseKeychain yes\n IdentityFile ~/.ssh/id_rsa
 eval "$(ssh-agent -s)"
 echo "run 'pbcopy < ~/.ssh/id_rsa.pub' and paste that into GitHub"
 
+
+
+exit 0
+
+
+
 echo "cloning dotfiles"
 git clone git@github.com:gmdayley/macsetup.git "${HOME}/macsetup"
 ln -s "${HOME}/macsetup/.gitignore_global" "${HOME}/.gitignore_global"
