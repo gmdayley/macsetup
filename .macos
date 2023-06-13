@@ -31,8 +31,6 @@ echo "Creating development directory"
 echo "mkdir -p ${HOME}/code"
 mkdir -p "${HOME}/code"
 
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-
 echo "Installing homebrew"
 # install homebrew https://brew.sh
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -62,9 +60,11 @@ ln -s "${HOME}/macsetup/.gitconfig" "${HOME}/.gitconfig"
 # #ln -s "${HOME}/macsetup/.zshrc" "${HOME}/.zshrc"
 # #ln -s "${HOME}/macsetup/.my_bin" "${HOME}/.my_bin"
 
+if false; then
 # Use Brewfile to install apps
 echo "brew installing bundle"
 brew bundle --file "${HOME}/macsetup/Brewfile"
+fi
 
 echo "node --version: $(node --version)"
 echo "npm --version: $(npm --version)"
@@ -86,9 +86,20 @@ npm install --global serve
 #npm login --registry=https://repo.churchofjesuschrist.org/artifactory/api/npm/npm-fhd/ --scope=@fs
 
 
+echo "Setting up FS Artifactory"
+read -p 'Enter your artifcatory user login (usually your FamilySearch email): ' artifactoryUser
+read -p 'Enter your artifactory API key: ' artifactoryApiKey
+
+$artifactoryUser:$artifactoryApiKey https://familysearch.jfrog.io/artifactory/api/npm/fs-npm-prod-virtual/auth/fs > ~/.npmrc
+
+
+echo "Installing Oh-my-zsh"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+
 echo "Making system modifications:"
 read -n 1 -r -s -p  "Press enter key to continue"
 
+if false; then
 # Make Chrome Two finger swipe for back and forward
 defaults write com.google.Chrome AppleEnableSwipeNavigateWithScrolls -bool TRUE
 
@@ -884,6 +895,7 @@ for app in "Activity Monitor" \
 done
 echo "Done. Note that some of these changes require a logout/restart to take effect."
 
+fi 
 
 
 
