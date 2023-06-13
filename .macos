@@ -19,12 +19,12 @@ while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 
 
-CREATE_DEV_DIR = "n"
-INSTALL_HOMEBREW = "n"
-CREATE_RSA_KEY = "n"
-INSTALL_OH_MY_ZSH = "n"
-SETUP_ARTIFACTORY = "n"
-CUSTOMIZE_MACOS = "n"
+CREATE_DEV_DIR=n
+INSTALL_HOMEBREW=n
+CREATE_RSA_KEY=n
+INSTALL_OH_MY_ZSH=n
+SETUP_ARTIFACTORY=n
+CUSTOMIZE_MACOS=n
 
 
 ###############################################################################
