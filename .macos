@@ -105,7 +105,7 @@ if ["$SETUP_ARTIFACTORY"]; then
   read -p 'Enter your artifactory API key: ' artifactoryApiKey
 
   curl -su $artifactoryUser:$artifactoryApiKey https://familysearch.jfrog.io/artifactory/api/npm/fs-npm-prod-virtual/auth/fs > ~/.npmrc
-then
+fi
 
 if ["$INSTALL_OH_MY_ZSH" == 'y']; then
   echo "Installing Oh-my-zsh"
