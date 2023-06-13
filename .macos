@@ -46,7 +46,7 @@ ssh-add --apple-use-keychain ~/.ssh/id_rsa
 echo "run 'pbcopy < ~/.ssh/id_rsa.pub' and paste that into GitHub"
 
 read -n 1 -r -s -p "Press any key to open browser"
-open -a Safari https://github.com
+open -a Safari https://github.com/settings/keys
 
 # pause "Once you have added your key to Github, press any key to continue"
 read -n 1 -r -s -p "Once command above is complete, press enter key to continue"
