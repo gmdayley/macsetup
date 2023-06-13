@@ -25,7 +25,7 @@ while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 echo "Hello $(whoami)! Let's get you set up."
 
 # pause "Press any key to continue"
-read -p "Press enter to continue"
+read -n 1 -r -s -p "Press enter to continue"
 
 echo "Creating development directory"
 echo "mkdir -p ${HOME}/code"
@@ -46,7 +46,7 @@ ssh-add -K ~/.ssh/id_rsa
 echo "run 'pbcopy < ~/.ssh/id_rsa.pub' and paste that into GitHub"
 
 # pause "Once command above is complete, press any key to continue"
-read -p "Once command above is complete, press enter key to continue"
+read -n 1 -r -s -p "Once command above is complete, press enter key to continue"
 
 echo "Cloning dotfiles"
 git clone git@github.com:gmdayley/macsetup.git "${HOME}/macsetup"
@@ -63,7 +63,7 @@ echo "node --version: $(node --version)"
 echo "npm --version: $(npm --version)"
 echo "yarn --varsion: $(yarn --version)"
 
-read -p "Node setup complete, press enter key to continue"
+read -n 1 -r -s -p  "Node setup complete, press enter key to continue"
 
 # get bat and delta all configured
 ###mkdir -p "${HOME}/.config/bat/themes"
@@ -80,7 +80,7 @@ npm install --global serve
 
 
 echo "Making system modifications:"
-read -p "Press enter key to continue"
+read -n 1 -r -s -p  "Press enter key to continue"
 
 # Make Chrome Two finger swipe for back and forward
 defaults write com.google.Chrome AppleEnableSwipeNavigateWithScrolls -bool TRUE
