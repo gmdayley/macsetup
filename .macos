@@ -19,12 +19,12 @@ while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 
 
-CREATE_DEV_DIR=n
-INSTALL_HOMEBREW=n
-CREATE_RSA_KEY=n
-INSTALL_OH_MY_ZSH=n
-SETUP_ARTIFACTORY=n
-CUSTOMIZE_MACOS=n
+CREATE_DEV_DIR=false
+INSTALL_HOMEBREW=false
+CREATE_RSA_KEY=false
+INSTALL_OH_MY_ZSH=false
+SETUP_ARTIFACTORY=false
+CUSTOMIZE_MACOS=false
 
 
 ###############################################################################
@@ -36,14 +36,14 @@ echo "Hello $(whoami)! Let's get you set up."
 # pause "Press any key to continue"
 read -n 1 -r -s -p "Press enter to continue"
 
-if [$CREATE_DEV_DIR == "y"]; then
+if ["$CREATE_DEV_DIR" == true]; then
   echo "Creating development directory"
   echo "mkdir -p ${HOME}/code"
   mkdir -p "${HOME}/code"
 fi
 
 
-if [$INSTALL_HOMEBREW == "y"]; then
+if ["$INSTALL_HOMEBREW" == true]; then
   echo "Installing homebrew"
   # install homebrew https://brew.sh
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -51,7 +51,7 @@ if [$INSTALL_HOMEBREW == "y"]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
-if [$CREATE_RSA_KEY == "y"]; then
+if ["$CREATE_RSA_KEY" == true]; then
   echo "Generating an RSA token for GitHub"
   ssh-keygen -t rsa -b 4096 -C "gabriel.dayley+github@gmail.com"
   eval "$(ssh-agent -s)"
@@ -99,7 +99,7 @@ npm install --global serve
 #npm login --registry=https://repo.churchofjesuschrist.org/artifactory/api/npm/npm-fhd/ --scope=@fs
 
 
-if [$SETUP_ARTIFACTORY]; then
+if ["$SETUP_ARTIFACTORY"]; then
   echo "Setting up FS Artifactory"
   read -p 'Enter your artifcatory user login (usually your FamilySearch email): ' artifactoryUser
   read -p 'Enter your artifactory API key: ' artifactoryApiKey
@@ -107,12 +107,12 @@ if [$SETUP_ARTIFACTORY]; then
   curl -su $artifactoryUser:$artifactoryApiKey https://familysearch.jfrog.io/artifactory/api/npm/fs-npm-prod-virtual/auth/fs > ~/.npmrc
 then
 
-if [$INSTALL_OH_MY_ZSH == 'y']; then
+if ["$INSTALL_OH_MY_ZSH" == 'y']; then
   echo "Installing Oh-my-zsh"
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 fi
 
-if [$CUSTOMIZE_MACOS]; then
+if ["$CUSTOMIZE_MACOS"]; then
   echo "Making system modifications:"
   read -n 1 -r -s -p  "Press enter key to continue"
 
