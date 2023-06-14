@@ -7,18 +7,6 @@
 # curl https://raw.githubusercontent.com/gmdayley/macsetup/master/.macos | bash
 # bash <(curl -s https://raw.githubusercontent.com/gmdayley/macsetup/master/.macos)
 
-# Close any open System Preferences panes, to prevent them from overriding
-# settings we’re about to change
-osascript -e 'tell application "System Preferences" to quit'
-
-# Ask for the administrator password upfront
-sudo -v
-
-# Keep-alive: update existing `sudo` time stamp until `.macos` has finished
-while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
-
-
-
 CREATE_DEV_DIR=false
 INSTALL_HOMEBREW=false
 CREATE_RSA_KEY=false
@@ -26,6 +14,15 @@ INSTALL_OH_MY_ZSH=false
 SETUP_ARTIFACTORY=true
 CUSTOMIZE_MACOS=false
 
+# Close any open System Preferences panes, to prevent them from overriding
+# settings we’re about to change
+osascript -e 'tell application "System Preferences" to quit'
+
+# Ask for the administrator password upfront
+sudo -vs
+
+# Keep-alive: update existing `sudo` time stamp until `.macos` has finished
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 ###############################################################################
 # Gabriel's Customizations                                                       #
@@ -41,7 +38,6 @@ if ["$CREATE_DEV_DIR" == true]; then
   echo "mkdir -p ${HOME}/code"
   mkdir -p "${HOME}/code"
 fi
-
 
 if ["$INSTALL_HOMEBREW" == true]; then
   echo "Installing homebrew"
@@ -91,28 +87,30 @@ read -n 1 -r -s -p  "Node setup complete, press enter key to continue"
 ###git clone https://github.com/batpigandme/night-owlish "${HOME}/.config/bat/themes/night-owlish"
 ###bat cache --build
 
-echo "Installing a few global npm packages"
-npm install --global serve
 
-#echo "setting up FamilySearch dev environment"
-#npm install --global @fs/fr-cli
-#npm login --registry=https://repo.churchofjesuschrist.org/artifactory/api/npm/npm-fhd/ --scope=@fs
-
-
-if ["$SETUP_ARTIFACTORY"]; then
+if [ "$SETUP_ARTIFACTORY" == "true" ]; then
   echo "Setting up FS Artifactory"
   read -p 'Enter your artifcatory user login (usually your FamilySearch email): ' artifactoryUser
   read -p 'Enter your artifactory API key: ' artifactoryApiKey
 
+  ## TODO -- check for error returned
   curl -su $artifactoryUser:$artifactoryApiKey https://familysearch.jfrog.io/artifactory/api/npm/fs-npm-prod-virtual/auth/fs > ~/.npmrc
+
+  echo "setting up FamilySearch dev environment"
+  npm install --global @fs/fr-cli
 fi
 
-if ["$INSTALL_OH_MY_ZSH" == 'y']; then
+echo "Installing a few global npm packages"
+npm install --global serve
+
+
+
+if [ "$INSTALL_OH_MY_ZSH" == true ]; then
   echo "Installing Oh-my-zsh"
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 fi
 
-if ["$CUSTOMIZE_MACOS"]; then
+if [ "$CUSTOMIZE_MACOS" == true ]; then
   echo "Making system modifications:"
   read -n 1 -r -s -p  "Press enter key to continue"
 
@@ -128,7 +126,6 @@ if ["$CUSTOMIZE_MACOS"]; then
   #sudo scutil --set HostName "0x6D746873"
   #sudo scutil --set LocalHostName "0x6D746873"
   #sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "0x6D746873"
-
   # Set standby delay to 24 hours (default is 1 hour)
   sudo pmset -a standbydelay 86400
 
