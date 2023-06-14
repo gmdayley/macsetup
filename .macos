@@ -75,7 +75,6 @@ if ["$CREATE_RSA_KEY" == true]; then
   brew bundle --file "${HOME}/macsetup/Brewfile"
 fi
 
-
 echo "node --version: $(node --version)"
 echo "npm --version: $(npm --version)"
 echo "yarn --varsion: $(yarn --version)"
@@ -88,23 +87,22 @@ read -n 1 -r -s -p  "Node setup complete, press enter key to continue"
 ###git clone https://github.com/batpigandme/night-owlish "${HOME}/.config/bat/themes/night-owlish"
 ###bat cache --build
 
-
 if [ "$SETUP_ARTIFACTORY" == "true" ]; then
   echo "Setting up FS Artifactory"
+  open -a Safari https://familysearch.jfrog.io
+
   read -p 'Enter your artifcatory user login (usually your FamilySearch email): ' artifactoryUser
   read -p 'Enter your artifactory API key: ' artifactoryApiKey
 
   ## TODO -- check for error returned
   curl -su $artifactoryUser:$artifactoryApiKey https://familysearch.jfrog.io/artifactory/api/npm/fs-npm-prod-virtual/auth/fs > ~/.npmrc
 
-  echo "setting up FamilySearch dev environment"
+  echo "Installing fr-cli"
   npm install --global @fs/fr-cli
 fi
 
-echo "Installing a few global npm packages"
+echo "Installing a few other global npm packages"
 npm install --global serve
-
-
 
 if [ "$INSTALL_OH_MY_ZSH" == true ]; then
   echo "Installing Oh-my-zsh"
@@ -284,7 +282,7 @@ if [ "$CUSTOMIZE_MACOS" == true ]; then
   defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
 
   # Set a blazingly fast keyboard repeat rate
-  defaults write NSGlobalDomain KeyRepeat -int 1
+  defaults write NSGlobalDomain KeyRepeat -int 10
   defaults write NSGlobalDomain InitialKeyRepeat -int 10
 
   # Set language and text formats
